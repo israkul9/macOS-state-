@@ -1,0 +1,74 @@
+//
+//  ViewController.swift
+//  demoSleep
+//
+//
+
+import Cocoa
+import Quartz
+class ViewController: NSViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        fileNotifications()
+       
+    }
+
+    override var representedObject: Any? {
+        didSet {
+     
+        }
+    }
+
+    
+    @objc func onWakeFromSleep(note: NSNotification) {
+       print("back from sleep ")
+    }
+
+    @objc func gotoSleep(note: NSNotification) {
+        
+    print("go to  sleep ")
+        
+    }
+    
+   
+    
+    @objc func goingToLock(note: NSNotification) {
+        
+        print("Going to be locked ")
+        
+    }
+    
+    
+    @objc func comeFromLock(note: NSNotification) {
+        
+        print("come From Lock Screen")
+        
+    }
+    
+
+   private func fileNotifications() {
+//        NSWorkspace.shared.notificationCenter.addObserver(
+//            self, selector: #selector(onWakeFromSleep(note:)),
+//            name: NSWorkspace.didWakeNotification, object: nil)
+//
+//        NSWorkspace.shared.notificationCenter.addObserver(
+//            self, selector: #selector(gotoSleep(note:)),
+//            name: NSWorkspace.willSleepNotification, object: nil)
+        
+        
+        let dnc = DistributedNotificationCenter.default()
+
+        dnc.addObserver(self, selector:  #selector(goingToLock(note:)), name: .init("com.apple.screenIsLocked"), object: nil)
+
+        dnc.addObserver(self, selector:  #selector(comeFromLock(note:)), name: .init("com.apple.screenIsUnlocked"), object: nil)
+
+
+        
+        
+    }
+    
+
+}
+
